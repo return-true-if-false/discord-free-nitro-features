@@ -1,6 +1,7 @@
 # Free discord nitro features
 
 This is a script that allows you to use the most important discord nitro features for free (against TOS!)
+Please start this repo if you like it!
 
 # How to use
 
