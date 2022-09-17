@@ -1,54 +1,57 @@
-window['webpackChunkdiscord_app']['push']([
-    [Math['random']()], {},
-    i => {
-        window['wpRequire'] = i;
+window.webpackChunkdiscord_app.push([
+    [Math.random()], {},
+    e => {
+        window.wpRequire = e
     }
-]), all = () => Object['keys'](wpRequire['c'])['map'](l => wpRequire['c'][l]['exports'])['filter'](ili => ili), find = lli => {
-    for (const ill of all()) {
-        if (ill['default'] && lli(ill['default'])) return ill['default'];
-        if (lli(ill)) return ill;
-    }
-}, findAll = lil => {
-    let li = [];
-    for (const il of all()) {
-        if (il['default'] && lil(il['default'])) li['push'](il['default']);
-        else lil(il) && li['push'](il);
-    }
-    return li;
-}, findByProps = (...Lil) => find(Ili => Lil['every'](Ill => Ili[Ill] !== undefined)), findByPropsAll = (...I) => findAll(Lli => I['every'](L => Lli[L] !== undefined)), asyncSleep = Li => new Promise(Il => setTimeout(Il, Li)), findByProps('getCurrentUser')['getCurrentUser']()['premiumType'] = 0x2, a = findByProps('sendMessage'), a['__sendMessage'] = a['__sendMessage'] || a['_sendMessage'], a['_sendMessage'] = async function(lI, lLi, iL) {
-    lLi?.['validNonShortcutEmojis']?.['forEach'](iLl => {
-        lLi['content'] = lLi['content']['replaceAll'](new RegExp('<(a|):' + (iLl['originalName'] || iLl['name']) + ':' + iLl['id'] + '>', 'g'), iLl['url']);
-    });
-    iL && (iL?.['stickerIds']?.['forEach'](iLi => {
-        lLi['content'] = lLi['content'] + 'https://media.discordapp.net/stickers/' + iLi + '.webp?size=160';
-    }), iL = {});
-    if (lLi['content']['length'] > 0x7d0) {
-        let lIl = lLi['content']['split'](/([\S\s]{1,2000})/g);
-        if (lIl[0x1]['match'](/```/g)?.['length'] % 0x2 !== 0x0 && lIl[0x3]['length'] <= 0x7bc) {
-            let IL = lIl[0x1];
-            lIl[0x1] = IL['substring'](0x0, 0x7cd) + '```';
-            let LIl = lIl[0x1]['match'](/```[^\n ]+/g);
-            LIl = LIl[LIl['length'] % 0x2 == 0x0 ? LIl['length'] - 0x2 : LIl['length'] - 0x1]['replace']('```', '');
-            let LLi = '```';
-            lIl[0x3]['match'](/```/g)?.['length'] >= 0x1 && lIl[0x3]['match'](/```/g)?.['length'] % 0x2 !== 0x0 && (LLi = ''), lIl[0x3] = '```' + LIl + '\x0a' + IL['substring'](0x7cd, 0x7d0) + lIl[0x3] + LLi;
+]);
+let e = () => Object.keys(wpRequire.c).map((e => wpRequire.c[e].exports)).filter((e => e)),
+    t = t => {
+        for (const n of e()) {
+            if (n.default && t(n.default)) return n.default;
+            if (t(n)) return n
         }
-        let LI = findByProps('getCachedChannelJsonForGuild')['getChannel'](lI)['rateLimitPerUser'];
-        await a['__sendMessage']['bind'](a)(lI, {
-            ...lLi,
-            'content': lIl[0x1]
-        }, iL);
-        let ILl = ![];
-        while (!ILl) {
-            await asyncSleep(LI);
-            let ILi = a['__sendMessage']['bind'](a)(lI, {
-                ...lLi,
-                'content': lIl[0x3]
-            }, iL)['catch'](liL => {
-                LI = liL['body']['retry_after'] * 0x3e8, ILl = ![];
-            });
-            ILi = await ILi;
-            if (ILi?.['ok']) return await ILi;
+    },
+    n = t => {
+        let n = [];
+        for (const s of e()) s.default && t(s.default) ? n.push(s.default) : t(s) && n.push(s);
+        return n
+    },
+    s = (...e) => t((t => e.every((e => void 0 !== t[e])))),
+    a = (...e) => n((t => e.every((e => void 0 !== t[e])))),
+    r = e => new Promise((t => setTimeout(t, e)));
+s("getCurrentUser").getCurrentUser().premiumType = 2;
+let i = s("sendMessage");
+i.__sendMessage = i.__sendMessage || i._sendMessage, i._sendMessage = async function(e, t, n) {
+    if (t?.validNonShortcutEmojis?.forEach((e => {
+            t.content = t.content.replaceAll(new RegExp("<(a|):" + (e.originalName || e.name) + ":" + e.id + ">", "g"), e.url)
+        })), n && (n?.stickerIds?.forEach((e => {
+            t.content = t.content + "https://media.discordapp.net/stickers/" + e + ".webp?size=160"
+        })), n = {}), t.content.length > 2e3) {
+        let a = t.content.split(/([\S\s]{1,2000})/g);
+        if (a[1].match(/```/g)?.length % 2 != 0 && a[3].length <= 1980) {
+            let e = a[1];
+            a[1] = e.substring(0, 1997) + "```";
+            let t = a[1].match(/```[^\n ]+/g);
+            t = t[t.length % 2 == 0 ? t.length - 2 : t.length - 1].replace("```", "");
+            let n = "```";
+            a[3].match(/```/g)?.length >= 1 && a[3].match(/```/g)?.length % 2 != 0 && (n = ""), a[3] = "```" + t + "\n" + e.substring(1997, 2e3) + a[3] + n
+        }
+        let l = s("getCachedChannelJsonForGuild").getChannel(e).rateLimitPerUser;
+        await i.__sendMessage.bind(i)(e, {
+            ...t,
+            content: a[1]
+        }, n);
+        let o = !1;
+        for (; !o;) {
+            await r(l);
+            let s = i.__sendMessage.bind(i)(e, {
+                ...t,
+                content: a[3]
+            }, n).catch((e => {
+                l = 1e3 * e.body.retry_after, o = !1
+            }));
+            if (s = await s, s?.ok) return await s
         }
     }
-    return await a['__sendMessage']['bind'](a)(...arguments);
+    return await i.__sendMessage.bind(i)(...arguments)
 };
