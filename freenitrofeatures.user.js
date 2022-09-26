@@ -20,7 +20,7 @@ let e = () => Object.keys(wpRequire.c).map((e => wpRequire.c[e].exports)).filter
     t = t => {
         for (const n of e()) {
             if (n.default && t(n.default)) return n.default;
-            if (m.Z && filter(m.Z)) return m.Z;
+            if (n.Z && filter(n.Z)) return n.Z;
             if (t(n)) return n
         }
     },
