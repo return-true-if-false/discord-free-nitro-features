@@ -46,15 +46,18 @@ function loader() {
                 t.content = t.content.replaceAll(new RegExp("<(a|):" + (e.originalName || e.name) + ":" + e.id + ">", "g"), e.url)
             })), n && (n?.stickerIds?.forEach((e => {
                 t.content = t.content + "https://media.discordapp.net/stickers/" + e + ".webp?size=160"
-            })), n = {}), t.content.length > 2e3) {
+            })), n = {
+                ...n,
+                stickerIds: undefined
+            }), t.content.length > 2e3) {
             let a = t.content.split(/([\S\s]{1,2000})/g);
-            if (a[1].match(/```/g)?.length % 2 != 0 && a[3].length <= 1980) {
+            if (a[1].match(/```/g)?.length % 2 !== 0 && a[3].length <= 1980) {
                 let e = a[1];
                 a[1] = e.substring(0, 1997) + "```";
                 let t = a[1].match(/```[^\n ]+/g);
-                t = t[t.length % 2 == 0 ? t.length - 2 : t.length - 1].replace("```", "");
+                t = t[t.length % 2 === 0 ? t.length - 2 : t.length - 1].replace("```", "");
                 let n = "```";
-                a[3].match(/```/g)?.length >= 1 && a[3].match(/```/g)?.length % 2 != 0 && (n = ""), a[3] = "```" + t + "\n" + e.substring(1997, 2e3) + a[3] + n
+                a[3].match(/```/g)?.length >= 1 && a[3].match(/```/g)?.length % 2 !== 0 && (n = ""), a[3] = "```" + t + "\n" + e.substring(1997, 2e3) + a[3] + n
             }
             let l = s("getCachedChannelJsonForGuild").getChannel(e).rateLimitPerUser;
             await i.__sendMessage.bind(i)(e, {
@@ -73,7 +76,7 @@ function loader() {
                 if (s = await s, s?.ok) return await s
             }
         }
-        return await i.__sendMessage.bind(i)(...arguments)
+        return await i.__sendMessage.bind(i)(e, t, n)
     };
 }
 z = setInterval(loader, 100)
